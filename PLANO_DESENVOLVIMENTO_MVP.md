@@ -1,6 +1,6 @@
 # Plano de Desenvolvimento e Documentação Técnica - Quantum Trades MVP
 
-**Versão:** 1.0  
+**Versão:** 1.1  
 **Data:** 05 de Janeiro de 2026  
 **Autor:** Manus AI
 
@@ -39,6 +39,7 @@ O MVP se concentrará nas seguintes funcionalidades essenciais, priorizadas para
 
 | Módulo | Funcionalidades Essenciais do MVP |
 | :--- | :--- |
+| **Landing Page (Fan Page)** | Página de entrada com design futurista, apresentação das vantagens, exibição de ganhos potenciais e botão de cadastro. |
 | **Autenticação e Segurança** | Cadastro de usuário, Login seguro com 2FA (Google Authenticator), e Recuperação de senha. |
 | **Onboarding** | Questionário de perfil de risco, aceite dos termos legais e autorização para execução automática (opcional). |
 | **Gestão de Planos** | Seleção entre 3 níveis de plano (Entrada, Médio, Top) e um modo de Trial com timer. |
@@ -59,9 +60,102 @@ O MVP se concentrará nas seguintes funcionalidades essenciais, priorizadas para
 
 ---
 
-## 3. Plano de Desenvolvimento em Sprints
+## 3. Landing Page (Fan Page) - Especificação Detalhada
 
-O desenvolvimento do MVP será dividido em **seis sprints**, permitindo entregas incrementais e validação contínua.
+A Landing Page é a porta de entrada da plataforma e deve causar uma primeira impressão impactante, comunicando confiança, tecnologia e resultados. Esta seção detalha todos os requisitos extraídos do Mapa Mental e do Manual Mestre.
+
+### 3.1. Diretrizes de Design
+
+| Aspecto | Especificação |
+| :--- | :--- |
+| **Estilo Visual** | Design moderno utilizando imagens futuristas com elementos neon que remetam a abundância e riqueza. |
+| **Tom** | Calmo e impactante simultaneamente. Transmitir confiança sem agressividade. |
+| **Paleta de Cores** | Fundo: #0A192F (Azul Noturno), Destaques: #FFD700 (Dourado Quantum), Texto: #FFFFFF |
+| **Tipografia** | Montserrat (700 para títulos, 600 para botões, 400 para texto) |
+| **Responsividade** | Totalmente responsiva para desktop, tablet e mobile |
+
+### 3.2. Estrutura da Página
+
+A Landing Page deve conter as seguintes seções, na ordem apresentada:
+
+| Seção | Conteúdo | Objetivo |
+| :--- | :--- | :--- |
+| **Hero Section** | Headline impactante, subheadline explicativa, imagem/vídeo futurista, CTA principal | Capturar atenção e comunicar proposta de valor |
+| **Vantagens** | Cards ou ícones descrevendo as principais vantagens da plataforma | Educar sobre benefícios |
+| **Como Funciona** | Passos simples explicando o funcionamento (3-4 etapas) | Reduzir fricção e dúvidas |
+| **Resultados/Ganhos** | Apresentação transparente de ganhos potenciais (com disclaimers legais) | Gerar interesse e credibilidade |
+| **Planos** | Resumo dos 3 planos (Entrada, Médio, Top) com preços e features | Facilitar decisão de compra |
+| **Depoimentos** | Testemunhos de usuários (quando disponíveis) | Prova social |
+| **FAQ** | Perguntas frequentes sobre a plataforma | Eliminar objeções |
+| **CTA Final** | Botão de cadastro com urgência | Converter visitante em lead |
+| **Footer** | Links legais, contato, redes sociais | Compliance e navegação |
+
+### 3.3. Formulário de Cadastro
+
+O formulário de cadastro deve ser acessível via botão na Landing Page e conter os seguintes campos:
+
+| Campo | Tipo | Validação | Obrigatório |
+| :--- | :--- | :--- | :--- |
+| **Nome Completo** | Texto | Mínimo 3 caracteres | Sim |
+| **CPF** | Texto com máscara | Formato xxx.xxx.xxx-xx, validação de dígitos | Sim |
+| **E-mail** | E-mail | Formato válido de e-mail | Sim |
+| **Corretora(s)** | Checkbox múltipla escolha | Pelo menos uma selecionada (ou "Ainda não tenho conta") | Sim |
+
+**Opções de Corretora:**
+
+| Corretora | Comportamento |
+| :--- | :--- |
+| XP | Seleção múltipla permitida |
+| Clear | Seleção múltipla permitida |
+| Inter | Seleção múltipla permitida |
+| Rico | Seleção múltipla permitida |
+| Genial | Seleção múltipla permitida |
+| Toro | Seleção múltipla permitida |
+| Nu Invest | Seleção múltipla permitida |
+| BTG | Seleção múltipla permitida |
+| **Ainda não tenho conta** | Anula todas as outras alternativas quando selecionada |
+
+**Após o envio do formulário:**
+1. Exibir QR Code para cadastro do Google Authenticator
+2. Botão "Seguir" para continuar o fluxo de onboarding
+
+### 3.4. Elementos de Conversão
+
+| Elemento | Especificação |
+| :--- | :--- |
+| **CTA Principal** | Botão dourado (#FFD700) com texto "Começar Agora" ou "Criar Conta Grátis" |
+| **CTA Secundário** | Link para "Saiba Mais" ou "Ver Planos" |
+| **Urgência** | Contador de vagas limitadas ou oferta por tempo limitado (se aplicável) |
+| **Trust Badges** | Selos de segurança, criptografia, conformidade |
+
+### 3.5. SEO e Performance
+
+| Requisito | Especificação |
+| :--- | :--- |
+| **Meta Tags** | Title, description e keywords otimizados para "trading automatizado", "robô de investimento", "IA financeira" |
+| **Open Graph** | Tags para compartilhamento em redes sociais |
+| **Performance** | Lighthouse score > 90 em todas as métricas |
+| **Tempo de Carregamento** | < 3 segundos em conexão 3G |
+
+---
+
+## 4. Plano de Desenvolvimento em Sprints
+
+O desenvolvimento do MVP será dividido em **sete sprints**, permitindo entregas incrementais e validação contínua. A Landing Page foi adicionada como **Sprint 0** por ser o primeiro ponto de contato com o usuário.
+
+### Sprint 0: Landing Page e Marketing
+
+**Objetivo:** Desenvolver a Landing Page (Fan Page) como porta de entrada da plataforma, capturando leads e comunicando a proposta de valor.
+
+| ID | História de Usuário | Critérios de Aceite |
+| :--- | :--- | :--- |
+| **QT-LP-01** | **Como Visitante,** quero acessar uma página inicial atraente que explique o que é a Quantum Trades e suas vantagens. | 1. Hero section com headline impactante e imagem futurista. <br> 2. Seção de vantagens com cards/ícones. <br> 3. Design responsivo (desktop, tablet, mobile). |
+| **QT-LP-02** | **Como Visitante,** quero ver como a plataforma funciona em passos simples para entender se é para mim. | 1. Seção "Como Funciona" com 3-4 etapas ilustradas. <br> 2. Linguagem simples e acessível. |
+| **QT-LP-03** | **Como Visitante,** quero ver os resultados e ganhos potenciais da plataforma de forma transparente. | 1. Seção de resultados com dados reais ou simulados. <br> 2. Disclaimers legais visíveis. <br> 3. Gráficos de performance ilustrativos. |
+| **QT-LP-04** | **Como Visitante,** quero comparar os planos disponíveis para escolher o mais adequado. | 1. Tabela comparativa dos 3 planos (Entrada, Médio, Top). <br> 2. Preços e features claramente listados. <br> 3. CTA para cada plano. |
+| **QT-LP-05** | **Como Visitante,** quero me cadastrar na plataforma através de um formulário simples. | 1. Formulário com campos: Nome, CPF, E-mail, Corretora(s). <br> 2. Validação de CPF no formato correto. <br> 3. Checkbox de corretoras com lógica de exclusão mútua para "Ainda não tenho conta". |
+| **QT-LP-06** | **Como Visitante,** quero ter minhas dúvidas respondidas antes de me cadastrar. | 1. Seção de FAQ com pelo menos 8-10 perguntas frequentes. <br> 2. Accordion ou tabs para organização. |
+| **QT-LP-07** | **Como Marketing,** quero que a página seja otimizada para SEO e conversão. | 1. Meta tags configuradas. <br> 2. Open Graph para redes sociais. <br> 3. Lighthouse score > 90. <br> 4. Integração com Google Analytics. |
 
 ### Sprint 1: Fundação e Autenticação
 
@@ -130,7 +224,22 @@ O desenvolvimento do MVP será dividido em **seis sprints**, permitindo entregas
 
 ---
 
-## 4. Pontos de Risco e Mitigações
+## 5. Resumo dos Sprints e Histórias
+
+| Sprint | Título | Histórias | Total |
+| :--- | :--- | :--- | :--- |
+| **Sprint 0** | Landing Page e Marketing | QT-LP-01 a QT-LP-07 | 7 |
+| **Sprint 1** | Fundação e Autenticação | QT-01 a QT-04 | 4 |
+| **Sprint 2** | Onboarding e Gestão de Planos | QT-05 a QT-08 | 4 |
+| **Sprint 3** | Dashboard e Visualização de Dados | QT-09 a QT-12 | 4 |
+| **Sprint 4** | Motor de IA (v1) e Bots | QT-13 a QT-16 | 4 |
+| **Sprint 5** | Integrações e Alertas | QT-17 a QT-19 | 3 |
+| **Sprint 6** | Refinamento e Preparação para o Beta | QT-20 a QT-23 | 4 |
+| **TOTAL** | | | **30** |
+
+---
+
+## 6. Pontos de Risco e Mitigações
 
 | Risco | Probabilidade | Impacto | Mitigação |
 | :--- | :--- | :--- | :--- |
@@ -138,11 +247,14 @@ O desenvolvimento do MVP será dividido em **seis sprints**, permitindo entregas
 | **Risco de Execução (OMS)** | Baixa | Alto | Implementar o adapter com múltiplos retries controlados, reconciliação de ordens e monitoramento constante da conexão com o Cedro OMS. |
 | **Risco Regulatório** | Média | Alto | Manter o escopo do MVP como ferramenta de automação (não consultoria), acompanhamento jurídico constante e roadmap regulatório faseado. |
 | **Risco de Segurança** | Média | Alto | Pentests regulares, 2FA obrigatório, criptografia de dados em repouso e em trânsito, e política de segurança estrita. |
+| **Risco de Conversão (Landing Page)** | Média | Médio | Testes A/B, otimização contínua baseada em métricas, e feedback de usuários. |
 
 ---
 
-## 5. Próximos Passos
+## 7. Próximos Passos
 
-1.  **Kick-off do Sprint 1:** Realizar a reunião de planejamento do Sprint 1 com a equipe de desenvolvimento para detalhar as tarefas das histórias de usuário **QT-01** a **QT-04**.
-2.  **Configuração do Ambiente:** Iniciar a configuração da infraestrutura base (repositório, CI/CD, banco de dados).
-3.  **Revisão de Design:** Validar os wireframes e o design de alta fidelidade para as telas de autenticação e onboarding com base no Manual Mestre.
+1.  **Kick-off do Sprint 0:** Iniciar o desenvolvimento da Landing Page com a equipe de frontend e design.
+2.  **Definição de Wireframes:** Criar wireframes de baixa fidelidade para a Landing Page e validar com stakeholders.
+3.  **Configuração do Ambiente:** Iniciar a configuração da infraestrutura base (repositório, CI/CD, banco de dados) em paralelo.
+4.  **Revisão de Design:** Validar o design de alta fidelidade para a Landing Page com base no Manual Mestre.
+5.  **Integração com Analytics:** Configurar Google Analytics e ferramentas de tracking para medir conversão desde o dia 1.

@@ -1,6 +1,6 @@
 # Requisitos Consolidados - Quantum Trades MVP
 
-**Versão:** 1.0  
+**Versão:** 1.1  
 **Data:** 05 de Janeiro de 2026  
 **Fonte:** Manual Mestre v3.0 + Mapa Mental
 
@@ -67,9 +67,83 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 
 ---
 
-## 4. Funcionalidades do MVP
+## 4. Landing Page (Fan Page) - Requisitos Detalhados
 
-### 4.1 Módulo de Autenticação e Segurança
+A Landing Page é a porta de entrada da plataforma e o primeiro ponto de contato com potenciais usuários. Esta seção detalha todos os requisitos extraídos do Mapa Mental.
+
+### 4.1 Diretrizes de Design
+
+| Aspecto | Especificação |
+|---------|---------------|
+| **Estilo Visual** | Design moderno utilizando imagens futuristas neon que remetam a abundância e riqueza |
+| **Tom** | Calmo e impactante simultaneamente |
+| **Paleta de Cores** | Fundo: #0A192F (Azul Noturno), Destaques: #FFD700 (Dourado Quantum), Texto: #FFFFFF |
+| **Tipografia** | Montserrat (700 para títulos, 600 para botões, 400 para texto) |
+| **Responsividade** | Totalmente responsiva para desktop, tablet e mobile |
+
+### 4.2 Estrutura da Página
+
+| Seção | Conteúdo | Prioridade |
+|-------|----------|------------|
+| **Hero Section** | Headline impactante, subheadline, imagem/vídeo futurista, CTA principal | P0 |
+| **Vantagens** | Cards descrevendo as principais vantagens da plataforma | P0 |
+| **Como Funciona** | 3-4 etapas simples explicando o funcionamento | P0 |
+| **Resultados/Ganhos** | Apresentação transparente de ganhos potenciais com disclaimers | P0 |
+| **Planos** | Tabela comparativa dos 3 planos com preços e features | P0 |
+| **FAQ** | Perguntas frequentes (8-10 perguntas) | P1 |
+| **Depoimentos** | Testemunhos de usuários (quando disponíveis) | P2 |
+| **CTA Final** | Botão de cadastro com urgência | P0 |
+| **Footer** | Links legais, contato, redes sociais | P1 |
+
+### 4.3 Formulário de Cadastro
+
+| Campo | Tipo | Validação | Obrigatório |
+|-------|------|-----------|-------------|
+| **Nome Completo** | Texto | Mínimo 3 caracteres | Sim |
+| **CPF** | Texto com máscara | Formato xxx.xxx.xxx-xx, validação de dígitos | Sim |
+| **E-mail** | E-mail | Formato válido de e-mail | Sim |
+| **Corretora(s)** | Checkbox múltipla escolha | Pelo menos uma selecionada | Sim |
+
+**Opções de Corretora (do Mapa Mental):**
+
+| Corretora | Comportamento |
+|-----------|---------------|
+| XP | Seleção múltipla permitida |
+| Clear | Seleção múltipla permitida |
+| Inter | Seleção múltipla permitida |
+| Rico | Seleção múltipla permitida |
+| Genial | Seleção múltipla permitida |
+| Toro | Seleção múltipla permitida |
+| Nu Invest | Seleção múltipla permitida |
+| BTG | Seleção múltipla permitida |
+| **Ainda não tenho conta** | **Anula todas as outras alternativas quando selecionada** |
+
+**Fluxo Pós-Cadastro:**
+1. Exibir QR Code para cadastro do Google Authenticator
+2. Botão "Seguir" para continuar o fluxo de onboarding
+
+### 4.4 Elementos de Conversão
+
+| Elemento | Especificação |
+|----------|---------------|
+| **CTA Principal** | Botão dourado (#FFD700) com texto "Começar Agora" ou "Criar Conta Grátis" |
+| **CTA Secundário** | Link para "Saiba Mais" ou "Ver Planos" |
+| **Trust Badges** | Selos de segurança, criptografia, conformidade |
+
+### 4.5 SEO e Performance
+
+| Requisito | Especificação |
+|-----------|---------------|
+| **Meta Tags** | Title, description e keywords otimizados |
+| **Open Graph** | Tags para compartilhamento em redes sociais |
+| **Performance** | Lighthouse score > 90 em todas as métricas |
+| **Tempo de Carregamento** | < 3 segundos em conexão 3G |
+
+---
+
+## 5. Funcionalidades do MVP
+
+### 5.1 Módulo de Autenticação e Segurança
 
 | Funcionalidade | Prioridade | Descrição |
 |----------------|------------|-----------|
@@ -79,7 +153,7 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 | Recuperação de senha | P0 | Via código por e-mail |
 | Validação de dados | P0 | CPF no padrão xxx.xxx.xxx-xx |
 
-### 4.2 Módulo de Onboarding
+### 5.2 Módulo de Onboarding
 
 | Funcionalidade | Prioridade | Descrição |
 |----------------|------------|-----------|
@@ -88,7 +162,7 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 | Autorização de execução | P0 | Opt-in para execução automática |
 | Cadastro Telegram | P1 | Para autorização remota |
 
-### 4.3 Módulo de Planos e Pagamento
+### 5.3 Módulo de Planos e Pagamento
 
 | Plano | Funcionalidades |
 |-------|-----------------|
@@ -99,11 +173,11 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 | Funcionalidade | Prioridade | Descrição |
 |----------------|------------|-----------|
 | Seleção de plano | P0 | 3 níveis de plano |
-| Trial com timer | P1 | Período de teste com contador |
+| Trial com timer | P1 | Período de teste com contador (30 segundos na tela informativa) |
 | Pagamento cartão | P0 | Integração com operadora |
 | Validação de pagamento | P0 | Feedback de sucesso/erro |
 
-### 4.4 Módulo Dashboard
+### 5.4 Módulo Dashboard
 
 | Componente | Prioridade | Descrição |
 |------------|------------|-----------|
@@ -116,7 +190,7 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 | Operações Recentes | P0 | Top 10 operações |
 | Gráfico de Performance | P1 | Evolução temporal |
 
-### 4.5 Módulo de Inteligência Artificial
+### 5.5 Módulo de Inteligência Artificial
 
 | Funcionalidade | Prioridade | Descrição |
 |----------------|------------|-----------|
@@ -126,7 +200,7 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 | Orquestrador de ordens | P0 | Modo DEMO inicialmente |
 | Explicabilidade | P0 | Motivo textual para cada decisão |
 
-### 4.6 Módulo de Bots
+### 5.6 Módulo de Bots
 
 | Funcionalidade | Prioridade | Descrição |
 |----------------|------------|-----------|
@@ -134,7 +208,7 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 | Criar/Editar Bot | P0 | Configurar estratégia básica |
 | Monitoramento | P0 | Status em tempo real |
 
-### 4.7 Integrações
+### 5.7 Integrações
 
 | Integração | Prioridade | Descrição |
 |------------|------------|-----------|
@@ -146,9 +220,9 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 
 ---
 
-## 5. Requisitos de Interface
+## 6. Requisitos de Interface
 
-### 5.1 Identidade Visual
+### 6.1 Identidade Visual
 
 | Elemento | Especificação |
 |----------|---------------|
@@ -159,7 +233,7 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 | Tipografia | Montserrat (700, 600, 400) |
 | Cards | border-radius: 8px-12px |
 
-### 5.2 Layout Padrão
+### 6.2 Layout Padrão (do Mapa Mental)
 
 | Elemento | Especificação |
 |----------|---------------|
@@ -169,7 +243,34 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 | Centro do Header | Status B3, S&P500, Cripto |
 | Direita do Header | Notificações, cadastro de alertas, conta |
 
-### 5.3 Mapa de Telas MVP
+### 6.3 Menu Sanduíche (do Mapa Mental)
+
+**DASHBOARD**
+- Painel Principal
+- Gráficos Avançados
+- Portfólio
+- Alerta
+
+**INTELIGÊNCIA ARTIFICIAL**
+- Painel de IA
+- Predileções
+- Análise de Sentimento
+- Recomendações
+- Definição de estratégias
+
+**RESEARCH**
+- Relatórios
+- Quantum Call
+- Giro de Mercado
+- Radar FII's
+- Radar de Opções
+
+**CONFIGURAÇÕES**
+- Configurações
+- Conta
+- Sair
+
+### 6.4 Mapa de Telas MVP
 
 | Tela | Prioridade | Persona Foco |
 |------|------------|--------------|
@@ -187,9 +288,9 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 
 ---
 
-## 6. Requisitos de Segurança e Compliance
+## 7. Requisitos de Segurança e Compliance
 
-### 6.1 Segurança
+### 7.1 Segurança
 
 | Requisito | Descrição |
 |-----------|-----------|
@@ -199,7 +300,7 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 | 2FA | Obrigatório para todos os usuários |
 | Criptografia | Senhas e dados sensíveis criptografados |
 
-### 6.2 Regras de Risco (Soberanas - Não Flexíveis)
+### 7.2 Regras de Risco (Soberanas - Não Flexíveis)
 
 | Regra | Descrição |
 |-------|-----------|
@@ -208,7 +309,7 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 | Drawdown Global | STOP TRADING se > 8% em 24h |
 | Drawdown por Modelo | PAUSAR MODELO se > 15% |
 
-### 6.3 Compliance
+### 7.3 Compliance
 
 | Área | Requisito |
 |------|-----------|
@@ -219,9 +320,9 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 
 ---
 
-## 7. Requisitos Não-Funcionais
+## 8. Requisitos Não-Funcionais
 
-### 7.1 Performance
+### 8.1 Performance
 
 | Métrica | Requisito |
 |---------|-----------|
@@ -229,7 +330,7 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 | Disponibilidade | 99.9% uptime |
 | Concorrência | Suportar 1.000 usuários (Fase 3) |
 
-### 7.2 Qualidade de Código
+### 8.2 Qualidade de Código
 
 | Requisito | Descrição |
 |-----------|-----------|
@@ -239,7 +340,7 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 | Retry | Controlado com backoff exponencial |
 | Tratamento de Falhas | Explícito e documentado |
 
-### 7.3 Observabilidade
+### 8.3 Observabilidade
 
 | Componente | Requisito |
 |------------|-----------|
@@ -250,9 +351,9 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 
 ---
 
-## 8. KPIs do MVP
+## 9. KPIs do MVP
 
-### 8.1 Produto
+### 9.1 Produto
 
 | KPI | Meta |
 |-----|------|
@@ -261,14 +362,14 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 | Bots por usuário | A definir |
 | Taxa de ativação | A definir |
 
-### 8.2 Retenção
+### 9.2 Retenção
 
 | KPI | Meta |
 |-----|------|
 | Retenção D30 | A definir |
 | Sessões semanais por usuário | A definir |
 
-### 8.3 Percepção
+### 9.3 Percepção
 
 | KPI | Meta |
 |-----|------|
@@ -277,7 +378,7 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 
 ---
 
-## 9. Personas
+## 10. Personas
 
 | Persona | Perfil | Necessidades | Como Atendemos |
 |---------|--------|--------------|----------------|
@@ -287,7 +388,7 @@ A arquitetura segue o padrão **Clean Architecture / Hexagonal Architecture** co
 
 ---
 
-## 10. Restrições do Sistema
+## 11. Restrições do Sistema
 
 O sistema **NÃO DEVE**:
 
