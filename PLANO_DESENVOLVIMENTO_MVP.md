@@ -44,7 +44,7 @@ O MVP se concentrará nas seguintes funcionalidades essenciais, priorizadas para
 | **Onboarding** | Questionário de perfil de risco, aceite dos termos legais e autorização para execução automática (opcional). |
 | **Gestão de Planos** | Seleção entre 3 níveis de plano (Entrada, Médio, Top) e um modo de Trial com timer. |
 | **Dashboard** | Visualização do valor total da carteira, retorno mensal, quantidade de trades, distribuição do portfólio e operações recentes. |
-| **Motor de IA (v1)** | Implementação de 2-3 setups básicos (ex: Cruzamento de Médias) em modo **DEMO**, com motivo textual para cada decisão. |
+| **Motor de IA (v1)** | Sistema de decisão robusto e multidisciplinar com análise técnica, fundamentalista e de sentimento, ranking de predileção (>70), backtesting e aprendizado contínuo. Operação exclusiva com dados reais. Ver [SPRINT_4_MOTOR_IA.md](./docs/SPRINT_4_MOTOR_IA.md). |
 | **Gestão de Bots** | Criação de bots com base nas estratégias disponíveis e visualização de seu status. |
 | **Integrações** | Conexão com **Cedro OMS** para envio de ordens (em ambiente de sandbox) e APIs de mercado para cotações (B3, Cripto). |
 | **Alertas** | Notificações via **Telegram** para operações e alertas de preço cadastrados pelo usuário. |
@@ -190,16 +190,22 @@ O desenvolvimento do MVP será dividido em **sete sprints**, permitindo entregas
 | **QT-11** | **Como Usuário,** quero ver uma lista das minhas 10 operações mais recentes. | 1. Tabela de operações recentes implementada. <br> 2. Dados atualizados com alta frequência. |
 | **QT-12** | **Como Usuário,** quero ver um gráfico da performance da minha carteira. | 1. Gráfico de performance implementado. <br> 2. Integração com APIs de mercado (B3, Cripto). |
 
-### Sprint 4: Motor de IA (v1) e Bots
+### Sprint 4: Motor de IA (Cérebro do Sistema)
 
-**Objetivo:** Implementar a primeira versão do motor de IA e o gerenciamento de bots.
+**Objetivo:** Implementar o Motor de Decisão de IA robusto e multidisciplinar, o coração da Quantum Trades. Operação exclusiva com dados reais.
+
+> **Documentação Completa:** Ver [SPRINT_4_MOTOR_IA.md](./docs/SPRINT_4_MOTOR_IA.md) para especificação detalhada.
 
 | ID | História de Usuário | Critérios de Aceite |
 | :--- | :--- | :--- |
-| **QT-13** | **Como Sistema,** quero ter um motor de decisão que gere recomendações de trade. | 1. Motor de IA v1 implementado em Python. <br> 2. Lógica para 2-3 setups básicos implementada. |
-| **QT-14** | **Como Sistema,** quero ter um orquestrador que prepare as decisões da IA para envio (em modo DEMO). | 1. Orquestrador de ordens implementado. <br> 2. Ordens salvas no DB com status "DEMO". |
-| **QT-15** | **Como Usuário,** quero poder ver uma lista dos meus bots de automação e seu status. | 1. Tela de listagem de bots. <br> 2. Status dos bots atualizado em tempo real. |
-| **QT-16** | **Como Usuário,** quero poder criar um novo bot, selecionando uma das estratégias disponíveis. | 1. Tela de criação/edição de bots. <br> 2. Formulário para configurar os parâmetros do bot. |
+| **QT-IA-01** | **Como Sistema,** quero rodar um processo diário (22:00 UTC-3) que combina análises (Fundamentalista, Gráfica, Sentimento, Sazonalidade) para rankear as estratégias mais rentáveis por papel. | 1. Implementação do algoritmo `Forrestthree`. <br> 2. Geração de um Ranking de Estratégias (RK) diário. <br> 3. O RK é usado para balizar o % de alocação de capital. |
+| **QT-IA-02** | **Como Sistema,** quero usar o resultado do ranking para gerar uma lista de oportunidades para o dia seguinte, com % de acurácia e expectativa de acerto. | 1. O processo das 22:00 gera uma lista de trades potenciais. <br> 2. Cada oportunidade na lista contém as métricas de acurácia e expectativa. |
+| **QT-IA-03** | **Como Sistema,** quero rodar uma análise gráfica a cada 5 minutos para identificar oportunidades e setups intraday. | 1. Implementação da análise de padrões (OCO, Engolfo, etc.). <br> 2. Geração de sinais de entrada/saída intraday. |
+| **QT-IA-04** | **Como Sistema,** quero aprender com meus erros, capturando a causa raiz de cada `stoploss` para ajustar futuras análises. | 1. Implementação do módulo `Brainding+LLM`. <br> 2. Criação de um log de aprendizado (causa-raiz do erro -> ajuste). |
+| **QT-IA-05** | **Como Sistema,** quero varrer fontes externas (YouTube, sites, Telegram) para aprender com canais reais e refinar minhas estratégias. | 1. Implementação de um scraper/parser para fontes externas. <br> 2. O conteúdo extraído alimenta o módulo `Brainding+LLM`. |
+| **QT-IA-06** | **Como Sistema (Analista Senior),** quero definir estratégias de proteção (opções, aluguel) para cada papel, a fim de minimizar perdas e potencializar ganhos. | 1. Módulo de análise de risco que sugere operações de hedge. <br> 2. As sugestões de proteção são anexadas à `DecisaoTrade`. |
+| **QT-IA-07** | **Como Sistema (Avaliações Ocultas),** quero calcular meu próprio impacto potencial no preço de um ativo e usar essa informação como um impulsionador de resultado. | 1. Implementação do módulo confidencial de análise de impacto. <br> 2. O resultado é usado na decisão final, mas **não é logado**. |
+| **QT-IA-08** | **Como Sistema,** quero consolidar todas as análises em uma pontuação final e só gerar uma `DecisaoTrade` se a pontuação for > 70. | 1. Orquestrador de Decisão que agrega todos os scores. <br> 2. Geração do `DecisaoTrade` JSON completo, incluindo `motivo_textual` detalhado. |
 
 ### Sprint 5: Integrações e Alertas
 
@@ -232,10 +238,10 @@ O desenvolvimento do MVP será dividido em **sete sprints**, permitindo entregas
 | **Sprint 1** | Fundação e Autenticação | QT-01 a QT-04 | 4 |
 | **Sprint 2** | Onboarding e Gestão de Planos | QT-05 a QT-08 | 4 |
 | **Sprint 3** | Dashboard e Visualização de Dados | QT-09 a QT-12 | 4 |
-| **Sprint 4** | Motor de IA (v1) e Bots | QT-13 a QT-16 | 4 |
+| **Sprint 4** | Motor de IA (Cérebro do Sistema) | QT-IA-01 a QT-IA-08 | 8 |
 | **Sprint 5** | Integrações e Alertas | QT-17 a QT-19 | 3 |
 | **Sprint 6** | Refinamento e Preparação para o Beta | QT-20 a QT-23 | 4 |
-| **TOTAL** | | | **30** |
+| **TOTAL** | | | **34** |
 
 ---
 
