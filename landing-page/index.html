@@ -153,6 +153,23 @@
             font-size: 1.1rem;
         }
 
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            padding: 10px 20px;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .navbar-buttons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
         /* ==================== Navigation ==================== */
         .navbar {
             position: fixed;
@@ -1019,6 +1036,52 @@
             color: var(--bg-primary);
         }
 
+        .app-download {
+            margin-top: 20px;
+        }
+
+        .app-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .app-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--gray-600);
+            border-radius: 8px;
+            padding: 10px 16px;
+            color: var(--white);
+            transition: var(--transition);
+        }
+
+        .app-btn:hover {
+            border-color: var(--gold);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .app-btn i {
+            font-size: 1.8rem;
+        }
+
+        .app-btn-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .app-btn-text span {
+            font-size: 0.65rem;
+            color: var(--gray-400);
+        }
+
+        .app-btn-text strong {
+            font-size: 0.95rem;
+        }
+
         .footer-links h4 {
             font-size: 1.1rem;
             margin-bottom: 20px;
@@ -1217,7 +1280,10 @@
                     <li><a href="#planos">Planos</a></li>
                     <li><a href="#faq">FAQ</a></li>
                 </ul>
-                <a href="#cadastro" class="btn btn-primary">Começar Agora</a>
+                <div class="navbar-buttons">
+                    <a href="#login" class="btn btn-outline" id="loginBtn">Entrar</a>
+                    <a href="#cadastro" class="btn btn-primary">Começar Agora</a>
+                </div>
             </div>
             <button class="navbar-toggle" id="navbarToggle">
                 <i class="fas fa-bars"></i>
@@ -1663,6 +1729,38 @@
         </div>
     </div>
 
+    <!-- Login Modal -->
+    <div class="qr-modal" id="loginModal">
+        <div class="qr-modal-content">
+            <h3>Entrar na <span class="text-gold">Plataforma</span></h3>
+            <p class="text-gray">Acesse sua conta Quantum Trades</p>
+            <form id="loginForm" style="margin-top: 30px;">
+                <div class="form-group">
+                    <label for="loginEmail">E-mail</label>
+                    <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Senha</label>
+                    <input type="password" id="loginPassword" placeholder="Sua senha" required>
+                </div>
+                <div class="form-group">
+                    <label for="login2FA">Código 2FA</label>
+                    <input type="text" id="login2FA" placeholder="000000" maxlength="6" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 20px;">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Entrar
+                </button>
+            </form>
+            <p style="margin-top: 20px; font-size: 0.9rem;">
+                <a href="#" class="text-gold" id="forgotPassword">Esqueceu sua senha?</a>
+            </p>
+            <p style="margin-top: 10px; font-size: 0.9rem; color: var(--gray-400);">
+                Não tem conta? <a href="#cadastro" class="text-gold" id="goToRegister">Cadastre-se</a>
+            </p>
+        </div>
+    </div>
+
     <!-- FAQ Section -->
     <section class="faq" id="faq">
         <div class="container">
@@ -1768,6 +1866,25 @@
                         <a href="#"><i class="fab fa-telegram"></i></a>
                         <a href="#"><i class="fab fa-linkedin"></i></a>
                     </div>
+                    <div class="app-download">
+                        <p style="margin-bottom: 12px; color: var(--gray-300); font-weight: 500;">Baixe nosso App:</p>
+                        <div class="app-buttons">
+                            <a href="#" class="app-btn" title="Baixar na App Store">
+                                <i class="fab fa-apple"></i>
+                                <div class="app-btn-text">
+                                    <span>Disponível na</span>
+                                    <strong>App Store</strong>
+                                </div>
+                            </a>
+                            <a href="#" class="app-btn" title="Baixar no Google Play">
+                                <i class="fab fa-google-play"></i>
+                                <div class="app-btn-text">
+                                    <span>Disponível no</span>
+                                    <strong>Google Play</strong>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="footer-links">
                     <h4>Plataforma</h4>
@@ -1829,6 +1946,16 @@
             link.addEventListener('click', () => {
                 navbarMenu.classList.remove('active');
             });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const isClickInsideMenu = navbarMenu.contains(e.target);
+            const isClickOnToggle = navbarToggle.contains(e.target);
+            
+            if (!isClickInsideMenu && !isClickOnToggle && navbarMenu.classList.contains('active')) {
+                navbarMenu.classList.remove('active');
+            }
         });
 
         // ==================== CPF Mask ====================
@@ -2005,6 +2132,46 @@
             if (e.target === qrModal) {
                 qrModal.classList.remove('active');
             }
+        });
+
+        // ==================== Login Modal ====================
+        const loginBtn = document.getElementById('loginBtn');
+        const loginModal = document.getElementById('loginModal');
+        const loginForm = document.getElementById('loginForm');
+        const goToRegister = document.getElementById('goToRegister');
+
+        loginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.classList.add('active');
+        });
+
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.classList.remove('active');
+            }
+        });
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const code2FA = document.getElementById('login2FA').value;
+
+            if (code2FA.length !== 6 || !/^\d+$/.test(code2FA)) {
+                alert('Código 2FA deve ter 6 dígitos numéricos.');
+                return;
+            }
+
+            // Simular login
+            alert('Login realizado com sucesso! Redirecionando para o Dashboard...');
+            loginModal.classList.remove('active');
+            loginForm.reset();
+        });
+
+        goToRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.classList.remove('active');
+            document.getElementById('cadastro').scrollIntoView({ behavior: 'smooth' });
         });
 
         // ==================== FAQ Accordion ====================
